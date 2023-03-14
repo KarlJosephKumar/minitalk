@@ -6,7 +6,7 @@
 /*   By: kakumar <kakumar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 11:39:26 by kakumar           #+#    #+#             */
-/*   Updated: 2023/03/14 14:23:25 by kakumar          ###   ########.fr       */
+/*   Updated: 2023/03/14 14:41:15 by kakumar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@ void	send_string(int pid, char *str)
 	char_decoder(pid, str[i]);
 }
 
-void	handler(int signal	, siginfo_t *client, void *ucontext)
+void	handler(int signal, siginfo_t *client, void *ucontext)
 {
-	if (signal = SIGUSR1)
+	(void) ucontext;
+	if (signal == SIGUSR1)
 		sendable = 1;
-	if (signal = SIGUSR2)
+	if (signal == SIGUSR2)
 	{
 		ft_printf("Message recieved from server side\n");
 		exit(EXIT_SUCCESS);
@@ -72,6 +73,8 @@ int main(int argc, char **argv)
 	sig.sa_flags = SA_RESTART | SA_SIGINFO;
 	sig.sa_handler = handler;
 	sigemptyset(&sig.sa_mask);
+	sigaction(SIGUSR1, &sig, NULL);
+	sigaction(SIGUSR2, &sig, NULL);
 	pid = ft_atoi(argv[1]);
 	if (!pid)
 	{
