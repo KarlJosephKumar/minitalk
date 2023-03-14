@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakumar <kakumar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kakumar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 11:39:54 by kakumar           #+#    #+#             */
-/*   Updated: 2023/03/14 14:27:23 by kakumar          ###   ########.fr       */
+/*   Created: 2022/10/25 11:02:26 by kakumar           #+#    #+#             */
+/*   Updated: 2022/10/25 11:38:46 by kakumar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
-
-int	main(void)
+int	ft_toupper(int c)
 {
-	t_client client;
-
-	return (0);
+	if (c >= 97 && c <= 122)
+	{
+		c -= 32;
+		return (c);
+	}
+	else
+		return (c);
 }

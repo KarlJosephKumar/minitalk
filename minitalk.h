@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakumar <kakumar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 11:39:54 by kakumar           #+#    #+#             */
-/*   Updated: 2023/03/14 14:27:23 by kakumar          ###   ########.fr       */
+/*   Created: 2023/03/14 11:34:07 by kakumar           #+#    #+#             */
+/*   Updated: 2023/03/14 14:25:11 by kakumar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#ifndef MINITALK_H
+# define MINITALK_H
 
-int	main(void)
+# include "libft/libft.h"
+# include "libft/ft_printf.h"
+# include <signal.h>
+
+typedef struct	s_client
 {
-	t_client client;
+	struct sigaction	sig;
+	int					bit_count;
+	char				c;
+}	t_client;
 
-	return (0);
-}
+#endif

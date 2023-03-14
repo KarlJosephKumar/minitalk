@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakumar <kakumar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 11:39:54 by kakumar           #+#    #+#             */
-/*   Updated: 2023/03/14 14:27:23 by kakumar          ###   ########.fr       */
+/*   Created: 2022/10/26 10:40:47 by kakumar           #+#    #+#             */
+/*   Updated: 2022/12/19 10:40:11 by kakumar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-int	main(void)
+char	*ft_strchr(const char *s, int c)
 {
-	t_client client;
+	char	a;
+	int		i;
 
-	return (0);
+	a = c;
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == a)
+			return ((char *)&s[i]);
+		i++;
+	}
+	if (a == '\0')
+		return ((char *)&s[i]);
+	return (NULL);
 }

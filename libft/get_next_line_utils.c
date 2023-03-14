@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakumar <kakumar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 11:39:54 by kakumar           #+#    #+#             */
-/*   Updated: 2023/03/14 14:27:23 by kakumar          ###   ########.fr       */
+/*   Created: 2022/12/11 16:58:34 by kakumar           #+#    #+#             */
+/*   Updated: 2022/12/19 10:40:51 by kakumar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "get_next_line.h"
 
-int	main(void)
+int	slen(char *str)
 {
-	t_client client;
+	int	i;
 
-	return (0);
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
 }

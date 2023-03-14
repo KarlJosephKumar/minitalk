@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakumar <kakumar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 11:39:54 by kakumar           #+#    #+#             */
-/*   Updated: 2023/03/14 14:27:23 by kakumar          ###   ########.fr       */
+/*   Created: 2022/11/08 16:10:15 by kakumar           #+#    #+#             */
+/*   Updated: 2023/02/21 18:41:23 by kakumar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-int	main(void)
+t_linlist	*ft_lstnew(void *content)
 {
-	t_client client;
+	t_linlist	*l;
 
-	return (0);
+	l = malloc(sizeof(t_linlist));
+	if (!l)
+		return (0);
+	l->content = content;
+	l->next = 0;
+	return (l);
 }

@@ -1,20 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakumar <kakumar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 11:39:54 by kakumar           #+#    #+#             */
-/*   Updated: 2023/03/14 14:27:23 by kakumar          ###   ########.fr       */
+/*   Created: 2022/11/08 17:17:04 by kakumar           #+#    #+#             */
+/*   Updated: 2023/02/21 18:41:09 by kakumar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-int	main(void)
+void	ft_lstclear(t_linlist **lst, void (*del)(void *))
 {
-	t_client client;
+	t_linlist	*temp;
+	t_linlist	*next;
 
-	return (0);
+	if (*lst == NULL || del == NULL)
+		return ;
+	temp = *lst;
+	if (temp == NULL)
+		return ;
+	next = temp->next;
+	while (next)
+	{
+		next = temp->next;
+		del(temp->content);
+		free(temp);
+		temp = next;
+	}
+	free(temp);
+	free(next);
+	*lst = NULL;
 }

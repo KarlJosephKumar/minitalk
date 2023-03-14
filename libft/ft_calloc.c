@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakumar <kakumar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 11:39:54 by kakumar           #+#    #+#             */
-/*   Updated: 2023/03/14 14:27:23 by kakumar          ###   ########.fr       */
+/*   Created: 2022/10/28 09:13:12 by kakumar           #+#    #+#             */
+/*   Updated: 2022/12/19 10:40:41 by kakumar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-int	main(void)
+void	*ft_calloc(size_t count, size_t size)
 {
-	t_client client;
+	void			*ptr;
+	unsigned char	*a;
+	size_t			bytes;
+	size_t			i;
 
-	return (0);
+	i = 0;
+	if (count == SIZE_MAX || size == SIZE_MAX)
+		return (NULL);
+	bytes = count * size;
+	ptr = malloc(bytes);
+	a = (unsigned char *) ptr;
+	if (ptr != NULL)
+	{
+		while (i < bytes)
+			a[i++] = 0;
+	}
+	return (a);
 }

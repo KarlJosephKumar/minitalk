@@ -1,20 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_putusnbr_count.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kakumar <kakumar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 11:39:54 by kakumar           #+#    #+#             */
-/*   Updated: 2023/03/14 14:27:23 by kakumar          ###   ########.fr       */
+/*   Created: 2022/11/13 10:49:33 by kakumar           #+#    #+#             */
+/*   Updated: 2022/11/16 10:44:39 by kakumar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "ft_printf.h"
 
-int	main(void)
+void	ft_putusnbr(unsigned int n)
 {
-	t_client client;
+	if (n < 10)
+		ft_putchar_count(n + '0', 1);
+	else
+	{
+		ft_putusnbr(n / 10);
+		ft_putusnbr(n % 10);
+	}
+}
 
-	return (0);
+int	ft_putusnbr_count(unsigned int n, int counter)
+{
+	long long	i;
+
+	i = 0;
+	ft_putusnbr(n);
+	if (n == 0)
+		return (counter + 1);
+	if (n < 0)
+	{
+		i++;
+		n *= -1;
+	}
+	while (n > 0)
+	{
+		n = n / 10;
+		i++;
+	}
+	return (counter + i);
 }
