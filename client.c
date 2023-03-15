@@ -6,7 +6,7 @@
 /*   By: kakumar <kakumar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 11:39:26 by kakumar           #+#    #+#             */
-/*   Updated: 2023/03/14 14:41:15 by kakumar          ###   ########.fr       */
+/*   Updated: 2023/03/15 16:06:35 by kakumar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,24 @@
 
 int	sendable = 0;
 
-void	char_decoder(int pid, char c)
+void	char_decoder(int pid, unsigned char c)
 {
 	int	i;
+	unsigned char chr;
 
-	i = 8;
-	while (i > 0)
+	i = 7;
+	chr = 1u<<i;
+	while (chr)
 	{
 		sendable = 0;
-		if (c & (1 << i))
+		if (chr && c)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		if (sendable == 0)
-		{
-			ft_printf("String sent\n");
-			exit(EXIT_SUCCESS);
-		}
+		if (!sendable)
+			pause();
+		i--;
+		chr >>= 1;
 	}
 }
 
@@ -44,7 +45,7 @@ void	send_string(int pid, char *str)
 		char_decoder(pid, str[i]);
 		i++;
 	}
-	char_decoder(pid, str[i]);
+	char_decoder(pid, 0);
 }
 
 void	handler(int signal, siginfo_t *client, void *ucontext)
@@ -52,7 +53,7 @@ void	handler(int signal, siginfo_t *client, void *ucontext)
 	(void) ucontext;
 	if (signal == SIGUSR1)
 		sendable = 1;
-	if (signal == SIGUSR2)
+	else if (signal == SIGUSR2)
 	{
 		ft_printf("Message recieved from server side\n");
 		exit(EXIT_SUCCESS);
@@ -70,8 +71,8 @@ int main(int argc, char **argv)
 		ft_printf("Do ./client pid 'message'\n");
 		exit(EXIT_FAILURE);
 	}
-	sig.sa_flags = SA_RESTART | SA_SIGINFO;
-	sig.sa_handler = handler;
+	sig.sa_flags = SA_SIGINFO |  SA_RESTART;
+	sig.sa_handler = (void (*)(int))handler;
 	sigemptyset(&sig.sa_mask);
 	sigaction(SIGUSR1, &sig, NULL);
 	sigaction(SIGUSR2, &sig, NULL);
