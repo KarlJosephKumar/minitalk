@@ -6,64 +6,51 @@
 /*   By: kakumar <kakumar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 11:39:26 by kakumar           #+#    #+#             */
-/*   Updated: 2023/03/15 16:06:35 by kakumar          ###   ########.fr       */
+/*   Updated: 2023/03/20 14:06:37 by kakumar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-int	sendable = 0;
-
 void	char_decoder(int pid, unsigned char c)
 {
 	int	i;
-	unsigned char chr;
 
-	i = 7;
-	chr = 1u<<i;
-	while (chr)
+	i = 0;
+	while (i < 8)
 	{
-		sendable = 0;
-		if (chr && c)
+		if (c & (1 << i))
+		{
+			usleep(505);
 			kill(pid, SIGUSR1);
+		}
 		else
+		{
+			usleep(520);
 			kill(pid, SIGUSR2);
-		if (!sendable)
-			pause();
-		i--;
-		chr >>= 1;
+		}
+		i++;
 	}
 }
 
 void	send_string(int pid, char *str)
 {
 	int	i;
+	int	len;
 
 	i = 0;
-	while (str[i])
+	len = ft_strlen(str);
+	while (i < len)
 	{
 		char_decoder(pid, str[i]);
 		i++;
 	}
-	char_decoder(pid, 0);
 }
 
-void	handler(int signal, siginfo_t *client, void *ucontext)
+int	main(int argc, char **argv)
 {
-	(void) ucontext;
-	if (signal == SIGUSR1)
-		sendable = 1;
-	else if (signal == SIGUSR2)
-	{
-		ft_printf("Message recieved from server side\n");
-		exit(EXIT_SUCCESS);
-	}
-}
-
-int main(int argc, char **argv)
-{
-	struct	sigaction	sig;
 	int					pid;
+	char				*str;
 
 	pid = 0;
 	if (argc != 3)
@@ -71,17 +58,20 @@ int main(int argc, char **argv)
 		ft_printf("Do ./client pid 'message'\n");
 		exit(EXIT_FAILURE);
 	}
-	sig.sa_flags = SA_SIGINFO |  SA_RESTART;
-	sig.sa_handler = (void (*)(int))handler;
-	sigemptyset(&sig.sa_mask);
-	sigaction(SIGUSR1, &sig, NULL);
-	sigaction(SIGUSR2, &sig, NULL);
 	pid = ft_atoi(argv[1]);
-	if (!pid)
+	if (kill(pid, 0) != 0 || !pid)
 	{
-		ft_printf("Valid pid pls\n");
+		ft_printf("Invalid pid\n");
 		exit(EXIT_FAILURE);
 	}
-	send_string(pid, argv[2]);
+	str = argv[2];
+	if (*str == '\0')
+	{
+		ft_printf("Empty string is not allowed\n");
+		exit(EXIT_FAILURE);
+	}
+	ft_printf("Starting to send message\n");
+	send_string(pid, str);
+	ft_printf("Message sent.\n");
 	return (0);
 }
